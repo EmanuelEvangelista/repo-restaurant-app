@@ -1,0 +1,52 @@
+.nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.navList li {
+  margin: 0;
+}
+
+.navList a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.navList a:hover {
+  color: #f4ce14;
+}
+
+/* Estilo para el enlace activo */
+.navList a[class*="active"] {
+  color: #f4ce14;
+  font-weight: 600;
+}
+
+/* Añadir línea debajo del enlace activo */
+.navList a[class*="active"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background-color: #f4ce14;
+  transition: transform 0.3s ease;
+}

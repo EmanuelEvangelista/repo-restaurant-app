@@ -1,13 +1,18 @@
-const Main = () => (
+import React from "react";
+import styles from "./Home.module.css";
+
+const Home = () => (
   <main>
-    <aside>
-      <h1>Le Dôme</h1>
-      <h4>San Francisco</h4>
-      <p>Contemporary haute cuisine with French roots, where technique and seasonal produce converge in an unparalleled experience.</p>
+    <aside className={styles.introduction}>
+      <div className={styles.textColumn}>
+        <h1>Le Dôme</h1>
+        <h4>San Francisco</h4>
+        <p>Contemporary haute cuisine with French roots, where technique and seasonal produce converge in an unparalleled experience.</p>
+        <button>Reserve a Table</button>
+      </div>
       <img src="restaurant.jpg" alt="Restaurant Interior" />
-      <button>Reserve a Table</button>
     </aside>
-    <aside>
+    <aside className={styles.specials}>
       <h2>Specials</h2>
       <article>
         <img src="specials.jpg" alt="Special Dishes" />
@@ -31,7 +36,7 @@ const Main = () => (
         <a href="#">Order a delivery 🔗</a>
       </article>
     </aside>
-    <aside>
+    <aside className={styles.testimonials}>
       <h2>Testimonials</h2>
       <article>
         <img src="customer1.jpg" alt="Customer 1" />
@@ -54,11 +59,13 @@ const Main = () => (
         <p>"From start to finish, the experience was top-notch. The flavors, presentation, and service were all outstanding."</p>
       </article>
     </aside>
-    <aside>
-      <h1>Le Dôme</h1>
-      <h4>San Francisco</h4>
-      <p>Located in the heart of San Francisco, Le Dôme blends French culinary tradition with contemporary creativity. Each dish highlights seasonal ingredients and precise technique, offering a refined balance of flavor and artistry. With its elegant ambiance and modern spirit, Le Dôme invites guests to experience the true essence of haute cuisine.</p>
-      <div>
+    <aside className={styles.about}>
+      <div className={styles.textColumn}>
+        <h1>Le Dôme</h1>
+        <h4>San Francisco</h4>
+        <p>Located in the heart of San Francisco, Le Dôme blends French culinary tradition with contemporary creativity. Each dish highlights seasonal ingredients and precise technique, offering a refined balance of flavor and artistry. With its elegant ambiance and modern spirit, Le Dôme invites guests to experience the true essence of haute cuisine.</p>
+      </div>
+      <div className={styles.imageColumn}>
         <img src="restaurant.jpg" alt="Restaurant Interior" />
         <img src="specials.jpg" alt="Special Dishes" />
       </div>
@@ -66,4 +73,4 @@ const Main = () => (
   </main>
 );
 
-export default Main;
+export default Home;
