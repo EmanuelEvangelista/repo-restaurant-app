@@ -5,6 +5,7 @@ import greek from "../assets/img/greek-salad.jpg";
 import lemon from "../assets/img/lemon-dessert.jpg";
 import restaurantFood from "../assets/img/restauranfood.jpg";
 import { fetchAPI } from "../utils/api";
+import { useEffect } from "react";
 
 // --- Contexto principal ---
 const RestaurantContext = React.createContext();
@@ -39,10 +40,9 @@ const aboutInfo = {
   image2: chefImage,
 };
 
-
 // Función pura que inicializa el estado del reducer
-function initializeTimes() {
-  return fetchAPI(new Date());
+function initializeTimes(date) {
+  return fetchAPI(date);
 }
 
 // Reducer para manejar los cambios de horarios
@@ -63,14 +63,34 @@ function RestaurantProvider({ children }) {
   const [testimonialsList, setTestimonialsList] = useState(testimonials);
   const [intro, setIntro] = useState(introduction);
   const [about, setAbout] = useState(aboutInfo);
-  const [bookingData, setBookingData] = useState(null);
 
-  const [availableTimes, dispatch] = useReducer(timesReducer, initializeTimes());
+    const storedBooking = JSON.parse(localStorage.getItem("bookingData"));
+
+  const [bookingData, setBookingData] = useState(
+    storedBooking || {
+      date: "",
+      time: "",
+      guests: "",
+      occasion: ""
+    }
+  );
+
+  // Guardar en localStorage cuando bookingData cambia
+  useEffect(() => {
+    localStorage.setItem("bookingData", JSON.stringify(bookingData));
+  }, [bookingData]);
+
+  const [availableTimes, dispatch] = useReducer(
+  timesReducer,
+  new Date(),
+  initializeTimes
+);
 
   const [data, setData] = useState("");
   const [times, setTimes] = useState("");
   const [guests, setGuests] = useState(2);
   const [occasion, setOccasion] = useState("Birthday");
+  const [isSubmitted, setIsSubmitted] = useState('');
 
   const handleUpdateTimes = (selectedDate) => {
     dispatch({ type: "UPDATE_TIMES", payload: selectedDate });
@@ -90,6 +110,8 @@ function RestaurantProvider({ children }) {
         times,
         guests,
         occasion,
+        isSubmitted,
+        setIsSubmitted,
         dispatch,
         setBookingData,
         setSpecials,

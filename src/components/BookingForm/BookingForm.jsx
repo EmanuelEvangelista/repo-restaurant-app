@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { RestaurantContext } from "../../RestaurantContext/restaurantContext.jsx";
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import { BiFontFamily } from "react-icons/bi";
+import TimeOption from "./TimeOption.jsx";
+import ConfirmedBooking from "./ConfirmedBooking.jsx";
 import { submitAPI } from "../../utils/api.js";
 
 const BookingForm = () => {
@@ -15,9 +17,9 @@ const BookingForm = () => {
     setTimes,
     setGuests,
     setOccasion,
-    dispatch,
-    availableTimes,
     handleUpdateTimes,
+    setBookingData,
+    setIsSubmitted
   } = useContext(RestaurantContext);
 
   // 2. Manejador de cambios en los campos
@@ -27,37 +29,39 @@ const BookingForm = () => {
     // 👇 Si se cambia la fecha (usamos name en lugar de id), actualizamos los horarios disponibles desde el contexto
     if (e.target.name === "res-date") {
       const selectedDate = newValue;
-      handleUpdateTimes(selectedDate); // 🔹 función del contexto
+      handleUpdateTimes(selectedDate); // función del contexto
       setter(selectedDate); // actualiza la fecha en el estado local
-      setTimes(""); // reinicia la hora seleccionada
-      return; // 👈 salimos aquí
+      setTimes("");
+      return;
     }
 
     // para los demás campos (hora, invitados, ocasión)
     setter(newValue);
   };
 
-  // 3. Manejador para el envío del formulario
   const handleFormSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const formData = {
-      date: data,
-      time: times,
-      guests: guests,
-      occasion: occasion,
-};
-
-const isSubmitted = submitAPI(formData);
-
-if (isSubmitted) {
-   alert(
-        `¡Reserva confirmada!\nFecha: ${data}, Hora: ${times}, Invitados: ${guests}, Ocasión: ${occasion}`
-      );
-} else {
-      alert("Lo sentimos, no se pudo realizar la reserva.");
-    }
+  const formData = {
+    date: data,
+    time: times,
+    guests: guests,
+    occasion: occasion
   };
+
+  setBookingData(formData);
+
+  const result = submitAPI(formData);
+  setIsSubmitted(!!result);
+
+  localStorage.clear();
+  localStorage.setItem("bookingData", JSON.stringify(formData));
+
+  setData("");
+  setTimes("");
+  setGuests(2);
+  setOccasion("Birthday");
+};
 
   return (
     <>
@@ -88,6 +92,7 @@ if (isSubmitted) {
                   name="res-date"
                   value={data}
                   onChange={(e) => handleInputChange(e, setData)}
+                  min={new Date().toISOString().split("T")[0]}
                   required
                 />
               </Form.Group>
@@ -102,25 +107,7 @@ if (isSubmitted) {
                   required
                 >
                   <option value="">Select...</option>
-                  {Array.isArray(availableTimes) && availableTimes.length > 0 ? (
-                    availableTimes.map((slot, idx) => {
-                      // slot can be a string like "17:00" or an object {time, date}
-                      if (slot && typeof slot === 'object') {
-                        const key = slot.date ? `${slot.date}-${slot.time}-${idx}` : `slot-${idx}`;
-                        return (
-                          <option key={key} value={slot.time}>
-                            {slot.time}
-                          </option>
-                        );
-                      }
-                      const key = `slot-${slot}-${idx}`;
-                      return (
-                        <option key={key} value={slot}>
-                          {slot}
-                        </option>
-                      );
-                    })
-                  ) : null}
+                  <TimeOption />
                 </Form.Select>
               </Form.Group>
 
@@ -156,6 +143,7 @@ if (isSubmitted) {
               <Button type="submit" variant="primary" className="mt-3 w-100">
                 Make my Reservation
               </Button>
+              <ConfirmedBooking />
             </Form>
           </Col>
         </Row>

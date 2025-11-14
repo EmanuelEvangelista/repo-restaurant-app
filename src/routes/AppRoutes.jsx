@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import MainLayout from "../layouts/MainLayouts";
 import BookingPage from "../pages/Booking/BookingPage";
+import ConfirmedBooking from "../components/BookingForm/ConfirmedBooking";
+import ConfirmedBookingPage from "../pages/Booking/ConfirmedBookingPage";
 
 // Componentes temporales para las rutas que faltan
 const About = () => <h1>About Page</h1>;
@@ -19,6 +21,7 @@ export default function AppRoutes() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/reservation" element={<BookingPage />} />
+          <Route path="/confirmed-booking" element={<ConfirmedBookingPage />} />
           <Route path="/order-online" element={<OrderOnline />} />
           <Route path="/login" element={<Login />} />
         </Routes>
