@@ -1,11 +1,10 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import restaurantImage from "../assets/img/restaurant.jpg";
 import chefImage from "../assets/img/restaurant-chef B.jpg";
 import greek from "../assets/img/greek-salad.jpg";
 import lemon from "../assets/img/lemon-dessert.jpg";
 import restaurantFood from "../assets/img/restauranfood.jpg";
-import { fetchAPI } from "../utils/api";
-import { useEffect } from "react";
+import { fetchAPI } from "../utils/api.js";
 
 // --- Contexto principal ---
 const RestaurantContext = React.createContext();
@@ -64,7 +63,7 @@ function RestaurantProvider({ children }) {
   const [intro, setIntro] = useState(introduction);
   const [about, setAbout] = useState(aboutInfo);
 
-    const storedBooking = JSON.parse(localStorage.getItem("bookingData"));
+  const storedBooking = JSON.parse(localStorage.getItem("bookingData"));
 
   const [bookingData, setBookingData] = useState(
     storedBooking || {
@@ -81,21 +80,20 @@ function RestaurantProvider({ children }) {
   }, [bookingData]);
 
   const [availableTimes, dispatch] = useReducer(
-  timesReducer,
-  new Date(),
-  initializeTimes
-);
+    timesReducer,
+    new Date(),
+    initializeTimes
+  );
 
   const [data, setData] = useState("");
   const [times, setTimes] = useState("");
   const [guests, setGuests] = useState(2);
   const [occasion, setOccasion] = useState("Birthday");
-  const [isSubmitted, setIsSubmitted] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState("");
 
   const handleUpdateTimes = (selectedDate) => {
     dispatch({ type: "UPDATE_TIMES", payload: selectedDate });
   };
-
 
   return (
     <RestaurantContext.Provider
@@ -130,4 +128,4 @@ function RestaurantProvider({ children }) {
   );
 }
 
-export { RestaurantContext, RestaurantProvider };
+export { RestaurantContext, RestaurantProvider, initializeTimes, timesReducer };
