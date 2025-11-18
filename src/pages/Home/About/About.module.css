@@ -44,7 +44,7 @@
 
 /* Efecto de solapamiento horizontal */
 .imageColumn img {
-  width: 280px;         /* ajustá según tu diseño */
+  width: 380px;         /* ajustá según tu diseño */
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   margin-left: -40px;   /* crea el solapamiento */
@@ -83,10 +83,20 @@
 
   .imageColumn {
     flex-direction: column;
+    gap: 1rem;
   }
+
+  .imageColumn img:last-child {
+  margin-left: 0px;
+  position: relative;
+  top: 0px;
+  z-index: 1; 
+}
+
 
   .imageColumn img {
     width: 100%;
+    max-width: 380px;
     margin-left: 0; /* sin solapamiento */
   }
 }

@@ -26,7 +26,7 @@ const testimonials = [
 const introduction = {
   title: "Le Dôme",
   location: "San Francisco",
-  description: "Contemporary haute cuisine...",
+  description: "Discover authentic French cuisine in the heart of the Bay. At Le Dôme, every dish is a celebration of tradition, artistry, and fresh ingredients. A culinary escape where elegance and a passion for France come together.",
   image: restaurantImage,
   buttonText: "Reserve a table",
 };
@@ -34,7 +34,7 @@ const introduction = {
 const aboutInfo = {
   name: "Le Dôme",
   location: "San Francisco",
-  description: "Experience an unparalleled dining journey...",
+  description: "At Le Dôme, we are proud to be the ambassador of authentic French cuisine in the Bay. Our mission is simple: to transport our guests to the finest bistros in France, offering dishes prepared with precision, passion, and respect for time-honored culinary techniques. From the first amuse-bouche to the last petit four, every ingredient is selected for its superior quality, and every presentation is a work of art. We are the meeting point where the timeless elegance of French gastronomy meets impeccable service, creating not just a dinner, but a memorable cultural experience.",
   image1: restaurantImage,
   image2: chefImage,
 };
@@ -89,7 +89,7 @@ function RestaurantProvider({ children }) {
   const [times, setTimes] = useState("");
   const [guests, setGuests] = useState(2);
   const [occasion, setOccasion] = useState("Birthday");
-  const [isSubmitted, setIsSubmitted] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleUpdateTimes = (selectedDate) => {
     dispatch({ type: "UPDATE_TIMES", payload: selectedDate });

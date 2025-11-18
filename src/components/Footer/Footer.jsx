@@ -1,14 +1,14 @@
 import React from 'react';
-import logo from '../../assets/icon/logo.svg';
+import logo from '../../assets/icon/logo2.png';
 import styles from './Footer.module.css';
 import { NavLink } from 'react-router-dom';
 
 const Footer = () => (
   <footer className={styles.footer}>
-    <img className={styles.logo} src={logo} alt="Le Dôme Restaurant Footer Logo" />
+    <img className={styles.logo} src={logo} alt="Le Dôme Restaurant Logo" />
     <nav className={styles.nav}>
       <div className={styles.columContainer}>
-        <h3>Dormant Navigation</h3>
+        <h3 aria-label='Dorman Navigation'>Dormant Navigation</h3>
         <ul>
           <li><NavLink to="/" end className={({isActive}) => isActive ? styles.active : ''}>Home</NavLink></li>
           <li><NavLink to="/about" className={({isActive}) => isActive ? styles.active : ''}>About</NavLink></li>
@@ -19,7 +19,7 @@ const Footer = () => (
         </ul>
         </div>
         <div className={styles.columContainer}>
-        <h3>Contact</h3>
+        <h3 aria-label="Contact Information">Contact</h3>
         <ul>
             <li><a href="#">Adress</a></li>
             <li><a href="#">Phone number</a></li>
@@ -27,7 +27,7 @@ const Footer = () => (
         </ul>
         </div>
         <div className={styles.columContainer}>
-        <h3>Social Media Links</h3>
+        <h3 aria-label="Social Media Links">Social Media Links</h3>
         <ul>
             <li><a href="#">Facebook</a></li>
             <li><a href="#">Instagram</a></li>

@@ -16,7 +16,7 @@
 
 .logo {
   grid-area: logo;
-  width: 100%;
+  width: 100px;
   max-width: 100px; /* Asegura que el logo no sea demasiado grande */
 }
 

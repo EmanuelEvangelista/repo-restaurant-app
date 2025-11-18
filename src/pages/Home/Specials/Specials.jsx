@@ -8,7 +8,7 @@ const Specials = () => {
 
     return (
         <section className={styles.specials}>
-        <h2>Specials</h2>
+        <h2 aria-label="Specials menus">Specials</h2>
         {specials.map((meal) => (
           <article key={meal.key} className={styles.specialItem}>
             <img src={meal.image} alt={meal.title} />

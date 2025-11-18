@@ -7,7 +7,7 @@ const Testimonials = () => {
 
     return (
         <section className={styles.testimonials}>
-        <h2>Testimonials</h2>
+        <h2 aria-label='Testimonials of clients'>Testimonials</h2>
             {testimonialsList.map((testimonial) => (
                 <article key={testimonial.key}>
                     <img src={testimonial.image} alt={testimonial.name} />

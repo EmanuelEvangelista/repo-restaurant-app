@@ -5,6 +5,7 @@ import { BiFontFamily } from "react-icons/bi";
 import TimeOption from "./TimeOption.jsx";
 import ConfirmedBooking from "./ConfirmedBooking.jsx";
 import { submitAPI } from "../../utils/api.js";
+import { useNavigate } from "react-router-dom";
 
 const BookingForm = () => {
   // 1. Obtener estados, setters, dispatcher y funciones del contexto
@@ -13,6 +14,7 @@ const BookingForm = () => {
     times,
     guests,
     occasion,
+    isSubmitted,
     setData,
     setTimes,
     setGuests,
@@ -21,6 +23,9 @@ const BookingForm = () => {
     setBookingData,
     setIsSubmitted
   } = useContext(RestaurantContext);
+
+  const [validated, setValidated] = React.useState(false);
+  const navigate = useNavigate();
 
   // 2. Manejador de cambios en los campos
   const handleInputChange = (e, setter) => {
@@ -41,6 +46,13 @@ const BookingForm = () => {
 
   const handleFormSubmit = (e) => {
   e.preventDefault();
+  e.stopPropagation();
+
+  const form = e.currentTarget;
+
+  if (form.checkValidity() === false) {
+    
+  } else {
 
   const formData = {
     date: data,
@@ -54,14 +66,19 @@ const BookingForm = () => {
   const result = submitAPI(formData);
   setIsSubmitted(!!result);
 
-  //localStorage.removeItem("bookingData");
-  //localStorage.setItem("bookingData", JSON.stringify(formData));
+  setValidated(true);
 
   setData("");
   setTimes("");
   setGuests(2);
   setOccasion("Birthday");
+
+  if (result) {
+  setIsSubmitted(true);
+  setTimeout(() => navigate("/confirmed-booking"), 2000);
+}
 };
+  };
 
   return (
     <>
@@ -81,6 +98,9 @@ const BookingForm = () => {
               Choose Your Table
             </h2>
             <Form
+              aria-label="Booking form"
+              data-testid="booking-form"
+              validated={validated}
               onSubmit={handleFormSubmit}
               style={{ display: "grid", maxWidth: "800px", gap: "20px" }}
             >
@@ -88,6 +108,7 @@ const BookingForm = () => {
               <Form.Group className="mb-3" controlId="res-date">
                 <Form.Label>Choose the date</Form.Label>
                 <Form.Control
+                  aria-label="Choose the date"
                   type="date"
                   name="res-date"
                   value={data}
@@ -101,6 +122,7 @@ const BookingForm = () => {
               <Form.Group className="mb-3" controlId="res-time">
                 <Form.Label>Choose the time</Form.Label>
                 <Form.Select
+                  aria-label="Choose the time"
                   name="res-time"
                   value={times}
                   onChange={(e) => handleInputChange(e, setTimes)}
@@ -115,6 +137,7 @@ const BookingForm = () => {
               <Form.Group className="mb-3" controlId="guests">
                 <Form.Label>Number of guests</Form.Label>
                 <Form.Control
+                  aria-label="Number of guests"
                   type="number"
                   placeholder="2"
                   min="1"
@@ -129,9 +152,11 @@ const BookingForm = () => {
               <Form.Group className="mb-3" controlId="occasion">
                 <Form.Label>Occasion</Form.Label>
                 <Form.Select
+                  aria-label="Special request"
                   id="occasion"
                   name="occasion"
                   value={occasion}
+                  required
                   onChange={(e) => handleInputChange(e, setOccasion)}
                 >
                   <option value="Birthday">Birthday</option>
@@ -139,11 +164,13 @@ const BookingForm = () => {
                   <option value="Other">Other</option>
                 </Form.Select>
               </Form.Group>
-
-              <Button type="submit" variant="primary" className="mt-3 w-100">
+              <Button 
+              aria-label="Make my Reservation" 
+              type="submit"  
+              disabled={!data || !times || !guests || !occasion}
+              >
                 Make my Reservation
               </Button>
-              <ConfirmedBooking />
             </Form>
           </Col>
         </Row>

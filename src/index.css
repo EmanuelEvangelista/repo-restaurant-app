@@ -13,7 +13,6 @@
   -moz-osx-font-smoothing: grayscale;
 
     --max-width: 1280px;        /* coincide con el contenedor de tu app */
-  --topbar-height: 72px;      /* ajusta a la altura que quieras */
   --footer-height: 100px; 
 }
 
@@ -21,7 +20,7 @@
 body {
   margin: 0;
   display: flex;
-  padding-top: 170px;
+  padding-top: 75px;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
